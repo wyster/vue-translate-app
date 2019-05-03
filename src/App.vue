@@ -1,20 +1,12 @@
 <template>
   <div id="app">
-    <Index />
+    <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link>
+    </div>
+    <router-view/>
   </div>
 </template>
-
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import Index from './components/Index.vue';
-
-@Component({
-  components: {
-    Index
-  }
-})
-export default class App extends Vue {}
-</script>
 
 <style lang="less">
 html, body {
