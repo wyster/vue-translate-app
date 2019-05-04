@@ -4,18 +4,20 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <style lang="less">
-html, body {
+html,
+body {
   background: white;
   color: black;
 }
 
 @media screen and (prefers-color-scheme: dark) {
-  html, body {
+  html,
+  body {
     background: rgb(29, 29, 29);
     color: rgba(255, 255, 255, 0.5);
   }

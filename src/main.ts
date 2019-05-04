@@ -1,20 +1,21 @@
 import Vue from 'vue';
 import App from './App.vue';
-import {createStore} from './store';
-import {createRouter} from './router'
+import { createStore } from './store';
+import { createRouter } from './router';
 
 Vue.config.productionTip = false;
 
-export async function createApp({beforeApp = ({}) => {}, afterApp = ({}) => {}} = {}) {
-  const router = createRouter()
-  const store = createStore()
-
+export async function createApp({
+  beforeApp = ({}) => {},
+  afterApp = ({}) => {}
+} = {}) {
+  const router = createRouter();
+  const store = createStore();
 
   await beforeApp({
     router,
-    store,
-
-  })
+    store
+  });
 
   const app = new Vue({
     store,
@@ -22,16 +23,15 @@ export async function createApp({beforeApp = ({}) => {}, afterApp = ({}) => {}} 
 
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     render: h => h(App)
-  })
+  });
 
   const result = {
     app,
     router,
-    store,
+    store
+  };
 
-  }
+  await afterApp(result);
 
-  await afterApp(result)
-
-  return result
-};
+  return result;
+}
