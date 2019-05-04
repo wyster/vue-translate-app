@@ -17,7 +17,7 @@ import { Component, Vue } from 'vue-property-decorator';
 export default class Index extends Vue {
   private input = '';
   mounted() {
-    this.$refs.input.focus();
+    (this.$refs.input as HTMLElement).focus();
     this.$watch('input', (v: string) => {
       if (!v) {
         return;
