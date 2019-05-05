@@ -8,8 +8,8 @@
     "lint:fix": "npm run lint -- --fix",
     "proxy": "node ./proxy.js",
     "ssr:build": "vue-cli-service ssr:build",
-    "ssr:serve": "vue-cli-service ssr:serve",
-    "ssr:start": "cross-env NODE_ENV=production vue-cli-service ssr:serve --mode production",
+    "ssr:serve": "cross-env VUE_APP_SSR=1 vue-cli-service ssr:serve",
+    "ssr:start": "cross-env NODE_ENV=production VUE_APP_SSR=1 vue-cli-service ssr:serve --mode production",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit"
   },

@@ -16,3 +16,4 @@ createApp({
     app.$mount('#app');
   }
 });
+/* eslint-enable */
