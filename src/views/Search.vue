@@ -10,7 +10,7 @@
     <div v-if="$store.state.searchList.length > 0">
       <ul :class="$style.list">
         <li v-for="item in $store.state.searchList" :key="item.title" :class="$style.list__item">
-          <a :href="item.link" target="_blank">{{ item.title }}</a>
+          <a :href="item.link" target="_blank" :class="$style['list__item-link']">{{ item.title }}</a>
         </li>
       </ul>
     </div>
@@ -35,11 +35,16 @@ export default class Index extends Vue {
     }
     (this.$refs.input as HTMLElement).focus();
     this.$watch('input', (v: string) => {
-      if (!v) {
-        this.$router.push('/');
-        return;
-      }
-      this.$router.push(`/search/${v}`);
+      this.$store.state.searchList.length = 0;
+      this.$nextTick(() => {
+        v = v.toLocaleLowerCase();
+        if (!v) {
+          this.$router.push('/');
+          return;
+        }
+        this.$router.push(`/search/${v}`);
+        this.request(v);
+      });
     });
   }
 
@@ -49,7 +54,7 @@ export default class Index extends Vue {
    */
   request(v: string) {
     return new Promise(async resolve => {
-      let url = `http://localhost:8081/https://it.wiktionary.org/w/api.php?action=opensearch&format=json&formatversion=2&search=${v}&namespace=0&limit=10`;
+      let url = `${process.env.VUE_APP_API_URL}/https://it.wiktionary.org/w/api.php?action=opensearch&format=json&formatversion=2&search=${v}&namespace=0&limit=10`;
       const data = (await axios.get(url, {
         headers: { 'X-Requested-With': 'XMLHttpRequest' }
       })).data;
@@ -77,8 +82,8 @@ export default class Index extends Vue {
 }
 
 .input {
-  height: 6vh;
-  font-size: 4vh;
+  padding: 5px 2px;
+  font-size: 24px;
   width: 100%;
 }
 
@@ -90,8 +95,10 @@ export default class Index extends Vue {
   &__item {
     text-align: left;
     line-height: 6vh;
+    display: block;
 
-    &:hover {
+    &-link {
+      display: block;
     }
   }
 }

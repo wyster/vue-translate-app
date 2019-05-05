@@ -12,7 +12,16 @@
 html,
 body {
   background: white;
-  color: black;
+  color: white;
+  font-size: 4vh;
+}
+
+a {
+  color: white;
+
+  &:hover, &:active, &:focus {
+    color: darkgray;
+  }
 }
 
 @media screen and (prefers-color-scheme: dark) {

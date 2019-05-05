@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { createApp } from './main';
 
 export default context => {

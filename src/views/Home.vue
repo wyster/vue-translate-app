@@ -19,6 +19,7 @@ export default class Index extends Vue {
   mounted() {
     (this.$refs.input as HTMLElement).focus();
     this.$watch('input', (v: string) => {
+      v = v.toLocaleLowerCase();
       if (!v) {
         return;
       }
@@ -35,8 +36,8 @@ export default class Index extends Vue {
 }
 
 .input {
-  height: 6vh;
-  font-size: 4vh;
+  padding: 5px 2px;
+  font-size: 24px;
   width: 100%;
 }
 
@@ -48,9 +49,6 @@ export default class Index extends Vue {
   &__item {
     text-align: left;
     line-height: 6vh;
-
-    &:hover {
-    }
   }
 }
 </style>

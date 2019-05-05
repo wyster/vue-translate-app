@@ -1,4 +1,6 @@
+/* eslint-disable */
 import { loadAsyncComponents } from '@akryum/vue-cli-plugin-ssr/client';
+import './registerServiceWorker'
 
 import { createApp } from './main';
 
@@ -8,7 +10,9 @@ createApp({
   },
 
   afterApp({ app, store }) {
-    store.replaceState(window.__INITIAL_STATE__);
+    if (window.__INITIAL_STATE__) {
+      store.replaceState(window.__INITIAL_STATE__);
+    }
     app.$mount('#app');
   }
 });
