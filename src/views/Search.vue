@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import axios from 'axios';
+import fetchJsonp from 'fetch-jsonp';
 
 interface List {
   title: string;
@@ -47,17 +47,15 @@ export default class Index extends Vue {
       });
     });
   }
-
   /**
    * @param v
    * @return Promise
    */
-  request(v: string) {
+  async request(v: string) {
+    const uri = `https://it.wiktionary.org/w/api.php?action=opensearch&format=json&&search=${v}&&limit=10&`;
     return new Promise(async resolve => {
-      let url = `${process.env.VUE_APP_API_URL}/https://it.wiktionary.org/w/api.php?action=opensearch&format=json&formatversion=2&search=${v}&namespace=0&limit=10`;
-      const data = (await axios.get(url, {
-        headers: { 'X-Requested-With': 'XMLHttpRequest' }
-      })).data;
+      const response = await fetchJsonp(uri);
+      const data = await response.json();
       const preparedData: List[] = [];
       for (let i = 0; i < data[1].length; i++) {
         preparedData.push({ title: data[1][i], link: data[3][i] });
