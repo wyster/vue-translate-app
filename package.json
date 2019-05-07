@@ -6,7 +6,7 @@
     "build": "vue-cli-service build",
     "lint": "eslint --ext vue,js,ts",
     "lint:fix": "npm run lint -- --fix",
-    "proxy": "node ./proxy.js",
+    "proxy": "node ./proxy.ts",
     "ssr:build": "vue-cli-service ssr:build",
     "ssr:serve": "cross-env VUE_APP_SSR=1 vue-cli-service ssr:serve",
     "ssr:start": "cross-env NODE_ENV=production VUE_APP_SSR=1 vue-cli-service ssr:serve --mode production",
