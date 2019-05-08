@@ -1,31 +1,19 @@
 <template>
   <div :class="$style.index">
-    <input
-      ref="input"
-      type="text"
-      :class="$style.input"
-      autofocus
-      v-model="input"
-    />
+    <search></search>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import Search from '@/views/Search.vue';
 
-@Component
-export default class Index extends Vue {
-  private input = '';
-  mounted() {
-    (this.$refs.input as HTMLElement).focus();
-    this.$watch('input', (v: string) => {
-      v = v.toLocaleLowerCase();
-      if (!v) {
-        return;
-      }
-      this.$router.push(`/search/${v}`);
-    });
+@Component({
+  components: {
+    Search
   }
+})
+export default class Index extends Vue {
 }
 </script>
 

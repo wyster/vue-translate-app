@@ -7,6 +7,7 @@
       autofocus
       v-model="input"
     />
+    <recognition @result="result"></recognition>
     <div v-if="$store.state.searchList.length > 0">
       <ul :class="$style.list">
         <li v-for="item in $store.state.searchList" :key="item.title" :class="$style.list__item">
@@ -20,17 +21,22 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import fetchJsonp from 'fetch-jsonp';
+import Recognition from '../components/Recognition.vue';
 
 interface List {
   title: string;
   link: string;
 }
 
-@Component({})
+@Component({
+  components: {
+    Recognition
+  }
+})
 export default class Index extends Vue {
   private input = '';
   mounted() {
-    if (this.$store.state.searchList.length === 0) {
+    if (this.$store.state.searchList.length === 0 && this.input) {
       this.request(this.input);
     }
     (this.$refs.input as HTMLElement).focus();
@@ -69,6 +75,9 @@ export default class Index extends Vue {
   }
   serverPrefetch() {
     return this.request(this.input);
+  }
+  result(v: string) {
+    this.input = v;
   }
 }
 </script>
