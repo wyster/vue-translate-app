@@ -1,15 +1,17 @@
 <template>
   <div :class="$style.module">
-    <span v-if="error" :class="$style.error">
-      Error: {{error}}
-    </span>
+    <span v-if="error" :class="$style.error"> Error: {{ error }} </span>
     <button @click="start" v-if="status === statuses.START" :class="$style.btn">
       <i :class="[$style.icon, $style.icon__start]"></i>
     </button>
     <button v-if="status === statuses.PROCESS && loading" :class="$style.btn">
       <i :class="[$style.icon, $style.icon__loading]"></i>
     </button>
-    <button @click="stop" v-if="status === statuses.PROCESS && !loading" :class="$style.btn">
+    <button
+      @click="stop"
+      v-if="status === statuses.PROCESS && !loading"
+      :class="$style.btn"
+    >
       <i :class="[$style.icon, $style.icon__stop]"></i>
     </button>
   </div>
@@ -18,11 +20,11 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
-// eslint-disable-next-line @typescript-eslint/no-use-before-define
+// eslint-disable-next-line
 const SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
-// eslint-disable-next-line @typescript-eslint/no-use-before-define
+// eslint-disable-next-line
 const SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
-// eslint-disable-next-line @typescript-eslint/no-use-before-define
+// eslint-disable-next-line
 const SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
 
 @Component({})
@@ -107,7 +109,7 @@ export default class Index extends Vue {
 
 <style lang="less" module>
 .module {
-  margin: 10px auto;
+  margin: 5vh auto;
 }
 
 .btn {

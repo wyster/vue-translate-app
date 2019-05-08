@@ -13,8 +13,7 @@ import Search from '@/views/Search.vue';
     Search
   }
 })
-export default class Index extends Vue {
-}
+export default class Index extends Vue {}
 </script>
 
 <style lang="less" module>

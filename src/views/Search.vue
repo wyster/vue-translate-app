@@ -10,8 +10,17 @@
     <recognition @result="result"></recognition>
     <div v-if="$store.state.searchList.length > 0">
       <ul :class="$style.list">
-        <li v-for="item in $store.state.searchList" :key="item.title" :class="$style.list__item">
-          <a :href="item.link" target="_blank" :class="$style['list__item-link']">{{ item.title }}</a>
+        <li
+          v-for="item in $store.state.searchList"
+          :key="item.title"
+          :class="$style.list__item"
+        >
+          <a
+            :href="item.link"
+            target="_blank"
+            :class="$style['list__item-link']"
+            >{{ item.title }}</a
+          >
         </li>
       </ul>
     </div>
@@ -72,6 +81,15 @@ export default class Index extends Vue {
   }
   created() {
     this.input = this.$route.params.word;
+    this.$watch(
+      '$route.name',
+      v => {
+        if (v !== 'search') {
+          this.$store.state.searchList.length = 0;
+        }
+      },
+      { immediate: true }
+    );
   }
   serverPrefetch() {
     return this.request(this.input);

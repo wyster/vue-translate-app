@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+    <div :class="$style.nav">
+      <router-link to="/">Home</router-link>
+    </div>
     <router-view />
   </div>
 </template>
@@ -15,7 +18,9 @@ body {
 a {
   color: white;
 
-  &:hover, &:active, &:focus {
+  &:hover,
+  &:active,
+  &:focus {
     color: darkgray;
   }
 }
@@ -56,5 +61,24 @@ html[dark] {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   margin-top: 60px;
+}
+</style>
+
+<style lang="less" module>
+.nav {
+  font-size: 3vh;
+  margin-bottom: 5vh;
+
+  a {
+    display: inline-block;
+    background-color: hsl(0, 0%, 19%);
+    padding: 10px;
+    color: hsla(0, 0%, 100%, 0.5);
+    text-decoration: none;
+
+    &:hover {
+      color: hsla(0, 0%, 100%, 0.6);
+    }
+  }
 }
 </style>

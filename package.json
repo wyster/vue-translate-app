@@ -62,8 +62,8 @@
     "commit-msg": "commitlint -E GIT_PARAMS"
   },
   "lint-staged": {
-    "*.js": [
-      "npm run lint -- --fix",
+    "*.{js,vue}": [
+      "npm run lint:fix",
       "git add"
     ]
   }
