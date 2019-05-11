@@ -11,8 +11,7 @@
     "ssr:serve": "cross-env VUE_APP_SSR=1 vue-cli-service ssr:serve",
     "ssr:start": "cross-env NODE_ENV=production VUE_APP_SSR=1 vue-cli-service ssr:serve --mode production",
     "test:e2e": "vue-cli-service test:e2e",
-    "test:unit": "vue-cli-service test:unit",
-    "now-build": "vue-cli-service build"
+    "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
     "@types/axios": "^0.14.0",
@@ -47,6 +46,8 @@
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-eslint": "^10.0.1",
     "chai": "^4.1.2",
+    "deepmerge": "^3.2.0",
+    "dotenv": "^8.0.0",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.2.0",
     "eslint-plugin-prettier": "^3.0.1",

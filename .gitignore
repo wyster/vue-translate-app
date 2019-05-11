@@ -22,4 +22,5 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
-.env
+.env*
+shipitfile.config.js
