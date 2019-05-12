@@ -20,6 +20,11 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
+declare var webkitSpeechRecognition: {
+  prototype: SpeechRecognition;
+  new (): SpeechRecognition;
+};
+
 @Component({})
 export default class Index extends Vue {
   result: string = '';
