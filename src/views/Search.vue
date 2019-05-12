@@ -7,7 +7,9 @@
       autofocus
       v-model="input"
     />
-    <recognition @result="result"></recognition>
+    <no-ssr>
+      <recognition @result="result"></recognition>
+    </no-ssr>
     <div v-if="$store.state.searchList.length > 0">
       <ul :class="$style.list">
         <li
@@ -31,6 +33,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import fetchJsonp from 'fetch-jsonp';
 import Recognition from '../components/Recognition.vue';
+import NoSSR from 'vue-no-ssr';
 
 interface List {
   title: string;

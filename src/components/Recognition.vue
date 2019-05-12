@@ -20,13 +20,6 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
-// eslint-disable-next-line
-const SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
-// eslint-disable-next-line
-const SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
-// eslint-disable-next-line
-const SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
-
 @Component({})
 export default class Index extends Vue {
   result: string = '';
@@ -57,6 +50,12 @@ export default class Index extends Vue {
       return;
     }
     this.result = '';
+    // eslint-disable-next-line
+    const SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+    // eslint-disable-next-line
+    const SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
+    // eslint-disable-next-line
+    const SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
     const recognition = new SpeechRecognition();
     this.recognition = recognition;
     console.log(this.recognition);
