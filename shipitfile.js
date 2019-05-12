@@ -29,9 +29,9 @@ module.exports = shipit => {
 
       await shipit.remote(`cd ${shipit.releasePath} && npm run ssr:build`);
       await shipit.remote(
-        `cd ${shipit.config.deployTo} && pm2 startOrRestart --env ${
+        `cd ${shipit.config.deployTo}/current && pm2 startOrRestart --env ${
           shipit.environment
-        } current/ecosystem.config.json`
+        } ecosystem.config.js`
       );
     });
   });
