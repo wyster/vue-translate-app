@@ -1,7 +1,12 @@
 /* eslint-disable */
 import { createApp } from './main';
 
-export default context => {
+interface Context {
+  url: string;
+  state: object
+}
+
+export default (context: Context) => {
   return new Promise(async (resolve, reject) => {
     const { app, router, store } = await createApp();
 
@@ -12,7 +17,7 @@ export default context => {
 
       Promise.all([
         // Async data
-        ...matchedComponents.map(Component => {
+        ...matchedComponents.map((Component: any) => {
           if (Component.asyncData) {
             return Component.asyncData({
               store,

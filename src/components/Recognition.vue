@@ -45,36 +45,33 @@ export default class Index extends Vue {
       }
     });
   }
-  start() {
+  start(): void {
     if (this.recognition !== null) {
       return;
     }
     this.result = '';
-    // eslint-disable-next-line
-    const SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
-    // eslint-disable-next-line
-    const SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
-    // eslint-disable-next-line
-    const SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
-    const recognition = new SpeechRecognition();
-    this.recognition = recognition;
-    console.log(this.recognition);
-    recognition.continuous = true;
-    recognition.interimResults = true;
-    recognition.onstart = () => {
+
+    const speech = webkitSpeechRecognition || SpeechRecognition;
+    this.recognition = new speech();
+    if (!this.recognition) {
+      return;
+    }
+    this.recognition.continuous = true;
+    this.recognition.interimResults = true;
+    this.recognition.onstart = () => {
       console.log('onstart');
       this.status = this.statuses.PROCESS;
     };
-    recognition.onerror = event => {
+    this.recognition.onerror = event => {
       console.log(event);
       this.error = event.error;
     };
-    recognition.onend = e => {
+    this.recognition.onend = e => {
       console.log('onend', e);
       this.recognition = null;
       this.status = this.statuses.ENDED;
     };
-    recognition.onresult = event => {
+    this.recognition.onresult = event => {
       this.loading = true;
       console.log(event);
       let final = '';
@@ -90,13 +87,13 @@ export default class Index extends Vue {
         this.$emit('result', this.result);
       }
     };
-    recognition.onaudioend = e => {
+    this.recognition.onaudioend = e => {
       console.log('onaudioend', e);
     };
 
-    //recognition.lang = 'ru-RU';
-    recognition.lang = 'it-IT';
-    recognition.start();
+    //this.recognition.lang = 'ru-RU';
+    this.recognition.lang = 'it-IT';
+    this.recognition.start();
   }
   stop() {
     if (this.recognition) {

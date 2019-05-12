@@ -4,6 +4,12 @@ import './registerServiceWorker'
 
 import { createApp } from './main';
 
+declare global {
+  interface Window {
+    __INITIAL_STATE__: any
+  }
+}
+
 createApp({
   async beforeApp({ router }) {
     await loadAsyncComponents({ router });
@@ -16,4 +22,3 @@ createApp({
     app.$mount('#app');
   }
 });
-/* eslint-enable */

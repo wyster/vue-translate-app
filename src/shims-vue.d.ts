@@ -5,3 +5,4 @@ declare module "*.vue" {
 }
 
 declare module 'vue-no-ssr'
+declare module '@akryum/vue-cli-plugin-ssr/client'

@@ -31,7 +31,6 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import fetchJsonp from 'fetch-jsonp';
 import Recognition from '../components/Recognition.vue';
 import NoSSR from 'vue-no-ssr';
 
@@ -42,7 +41,8 @@ interface List {
 
 @Component({
   components: {
-    Recognition
+    Recognition,
+    'no-ssr': NoSSR
   }
 })
 export default class Index extends Vue {
@@ -70,9 +70,13 @@ export default class Index extends Vue {
    * @return Promise
    */
   async request(v: string) {
+    if (this.$ssrContext) {
+      return Promise.resolve();
+    }
     const uri = `https://it.wiktionary.org/w/api.php?action=opensearch&format=json&&search=${v}&&limit=10&`;
     return new Promise(async resolve => {
-      const response = await fetchJsonp(uri);
+      const fetchJsonp: any = await import('fetch-jsonp');
+      const response = await fetchJsonp.default(uri);
       const data = await response.json();
       const preparedData: List[] = [];
       for (let i = 0; i < data[1].length; i++) {
@@ -95,7 +99,11 @@ export default class Index extends Vue {
     );
   }
   serverPrefetch() {
-    return this.request(this.input);
+    if (this.input) {
+      return this.request(this.input);
+    }
+
+    return Promise.resolve();
   }
   result(v: string) {
     this.input = v;
