@@ -38,6 +38,7 @@ export default class Index extends Vue {
     ENDED: 4
   };
   loading: boolean = false;
+
   created() {
     this.$watch('status', v => {
       if (v === this.statuses.ENDED) {
@@ -50,12 +51,23 @@ export default class Index extends Vue {
       }
     });
   }
+
   start(): void {
     if (this.recognition !== null) {
       return;
     }
     this.result = '';
 
+    navigator.getUserMedia({ audio: true }, this.speechStart, error => {
+      this.error = error;
+    });
+  }
+  stop() {
+    if (this.recognition) {
+      this.recognition.stop();
+    }
+  }
+  speechStart() {
     const speech = webkitSpeechRecognition || SpeechRecognition;
     this.recognition = new speech();
     if (!this.recognition) {
@@ -100,11 +112,6 @@ export default class Index extends Vue {
     this.recognition.lang = process.env.SPEECH_LANG;
     console.debug('Speech lang:', process.env.SPEECH_LANG);
     this.recognition.start();
-  }
-  stop() {
-    if (this.recognition) {
-      this.recognition.stop();
-    }
   }
 }
 </script>
