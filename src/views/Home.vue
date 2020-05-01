@@ -24,7 +24,7 @@ export default class Index extends Vue {}
 
 .input {
   padding: 5px 2px;
-  font-size: 24px;
+  font-size: 4vh;
   width: 100%;
 }
 
