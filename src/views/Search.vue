@@ -20,9 +20,30 @@
           <a
             :href="item.link"
             target="_blank"
+            rel="noreferrer"
             :class="$style['list__item-link']"
-            >{{ item.title }}</a
           >
+            {{ item.title }}
+          </a>
+          &nbsp; (
+          <a
+            :href="item.multitranLink"
+            target="_blank"
+            rel="noreferrer"
+            :class="$style['list__item-link']"
+          >
+            multitran
+          </a>
+          /
+          <a
+            :href="item.reversoLink"
+            target="_blank"
+            rel="noreferrer"
+            :class="$style['list__item-link']"
+          >
+            reverso
+          </a>
+          )
         </li>
       </ul>
     </div>
@@ -37,6 +58,8 @@ import NoSSR from 'vue-no-ssr';
 interface List {
   title: string;
   link: string;
+  multitranLink: string;
+  reversoLink: string;
 }
 
 @Component({
@@ -82,7 +105,13 @@ export default class Index extends Vue {
       const data = await response.json();
       const preparedData: List[] = [];
       for (let i = 0; i < data[1].length; i++) {
-        preparedData.push({ title: data[1][i], link: data[3][i] });
+        let phrase = data[1][i];
+        preparedData.push({
+          title: phrase,
+          link: data[3][i],
+          multitranLink: `https://www.multitran.com/m.exe?l1=1&l2=2&s=${phrase}`,
+          reversoLink: `https://context.reverso.net/перевод/английский-русский/${phrase}`
+        });
       }
       this.$store.state.searchList = preparedData;
       resolve();
@@ -136,7 +165,10 @@ export default class Index extends Vue {
     display: block;
 
     &-link {
-      display: block;
+      text-decoration: underline;
+      word-wrap: normal;
+      display: inline-block;
+      cursor: pointer;
     }
   }
 }
