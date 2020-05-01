@@ -59,7 +59,7 @@ export default class Index extends Vue {
     this.result = '';
 
     navigator.getUserMedia({ audio: true }, this.speechStart, error => {
-      this.error = error;
+      this.error = error.message || 'getUserMedia error';
     });
   }
   stop() {
