@@ -1,4 +1,9 @@
-## Цели создания проекта
-* Создать дружественный для мобильного поиск слов по it.wiktionary.org
-* Ознакомиться со всей экосистемой vue, плагинами pwa и ssr для vue-cli, минимизировать ручную конфигурацию сборки
-* Освоить работу с данными через GraphQL
+## Installation and create dist
+
+Run: `nvm use && npm install`
+
+Development build with serve: `npm run serve`
+
+Production build: `npm run build`
+
+Output in directory `dist`
