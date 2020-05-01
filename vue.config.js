@@ -1,5 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const DotenvPlugin = require('webpack-dotenv-plugin');
 
 module.exports = {
   lintOnSave: false,
@@ -15,5 +17,8 @@ module.exports = {
     name: 'My App',
     themeColor: '#1d1d1d',
     msTileColor: '#ffffff'
+  },
+  chainWebpack: config => {
+    config.plugin('dotenv').use(DotenvPlugin, [{ sample: './.env.dist' }]);
   }
 };

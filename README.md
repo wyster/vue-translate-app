@@ -1,6 +1,6 @@
 ## Installation and create dist
 
-Run: `nvm use && npm install`
+Run: `cp -n .env.dist .env && nvm use && npm install`
 
 Development build with serve: `npm run serve`
 

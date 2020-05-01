@@ -64,21 +64,21 @@ export default class Index extends Vue {
     this.recognition.continuous = true;
     this.recognition.interimResults = true;
     this.recognition.onstart = () => {
-      console.log('onstart');
+      console.debug('onstart');
       this.status = this.statuses.PROCESS;
     };
     this.recognition.onerror = event => {
-      console.log(event);
+      console.debug(event);
       this.error = event.error;
     };
     this.recognition.onend = e => {
-      console.log('onend', e);
+      console.debug('onend', e);
       this.recognition = null;
       this.status = this.statuses.ENDED;
     };
     this.recognition.onresult = event => {
       this.loading = true;
-      console.log(event);
+      console.debug(event);
       let final = '';
       for (var i = event.resultIndex; i < event.results.length; ++i) {
         if (event.results[i].isFinal) {
@@ -89,15 +89,16 @@ export default class Index extends Vue {
       if (final) {
         this.loading = false;
         this.result += final;
+        console.debug('speech result', this.result);
         this.$emit('result', this.result);
       }
     };
     this.recognition.onaudioend = e => {
-      console.log('onaudioend', e);
+      console.debug('onaudioend', e);
     };
 
-    //this.recognition.lang = 'ru-RU';
-    this.recognition.lang = 'it-IT';
+    this.recognition.lang = process.env.SPEECH_LANG;
+    console.debug('Speech lang:', process.env.SPEECH_LANG);
     this.recognition.start();
   }
   stop() {

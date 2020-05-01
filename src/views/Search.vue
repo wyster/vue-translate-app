@@ -73,7 +73,9 @@ export default class Index extends Vue {
     if (this.$ssrContext) {
       return Promise.resolve();
     }
-    const uri = `https://it.wiktionary.org/w/api.php?action=opensearch&format=json&&search=${v}&&limit=10&`;
+
+    const lang = process.env.SPEECH_LANG.split('-')[0];
+    const uri = `https://${lang}.wiktionary.org/w/api.php?action=opensearch&format=json&&search=${v}&&limit=10`;
     return new Promise(async resolve => {
       const fetchJsonp: any = await import('fetch-jsonp');
       const response = await fetchJsonp.default(uri);
