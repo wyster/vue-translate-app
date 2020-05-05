@@ -3,7 +3,7 @@
   "name": "vue-translate-app",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --watch --mode development",
     "build": "vue-cli-service build",
     "lint": "eslint --ext vue,js,ts",
     "lint:fix": "npm run lint -- --fix",
@@ -13,7 +13,9 @@
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit",
     "deploy::production": "npx shipit production deploy",
-    "rollback::production": "npx shipit production rollback"
+    "rollback::production": "npx shipit production rollback",
+    "prettier": "npx prettier ./ --write",
+    "ci": "npx prettier ./ --check"
   },
   "dependencies": {
     "@types/axios": "^0.14.0",

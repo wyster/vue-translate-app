@@ -4,12 +4,16 @@
     <button @click="start" v-if="status === statuses.START" :class="$style.btn">
       <i :class="[$style.icon, $style.icon__start]"></i>
     </button>
-    <button v-if="status === statuses.PROCESS && loading" :class="$style.btn">
+    <button
+      v-if="status === statuses.PROCESS"
+      :class="$style.btn"
+      @click="stop"
+    >
       <i :class="[$style.icon, $style.icon__loading]"></i>
     </button>
     <button
       @click="stop"
-      v-if="status === statuses.PROCESS && !loading"
+      v-if="status === statuses.STARTED"
       :class="$style.btn"
     >
       <i :class="[$style.icon, $style.icon__stop]"></i>
@@ -25,17 +29,24 @@ declare var webkitSpeechRecognition: {
   new (): SpeechRecognition;
 };
 
+declare global {
+  interface Window {
+    'dictate-service': any;
+  }
+}
+
 @Component({})
 export default class Index extends Vue {
   result: string = '';
-  recognition: SpeechRecognition | null = null;
+  recognition: any | null = null;
   status: number = 1;
   error: string = '';
   statuses = {
     START: 1,
-    PROCESS: 2,
-    ERROR: 3,
-    ENDED: 4
+    STARTED: 2,
+    PROCESS: 3,
+    ERROR: 4,
+    ENDED: 5
   };
   loading: boolean = false;
 
@@ -62,56 +73,35 @@ export default class Index extends Vue {
       this.error = error.message || 'getUserMedia error';
     });
   }
-  stop() {
+  async stop() {
     if (this.recognition) {
-      this.recognition.stop();
+      await this.recognition.destroy();
+      this.status = this.statuses.ENDED;
+      this.recognition = null;
     }
   }
-  speechStart() {
-    const speech = webkitSpeechRecognition || SpeechRecognition;
-    this.recognition = new speech();
-    if (!this.recognition) {
-      return;
+  async speechStart() {
+    if (typeof window['dictate-service'] === 'undefined') {
+      await import('@libs/dictate-service');
     }
-    this.recognition.continuous = true;
-    this.recognition.interimResults = true;
-    this.recognition.onstart = () => {
-      console.debug('onstart');
-      this.status = this.statuses.PROCESS;
-    };
-    this.recognition.onerror = event => {
-      console.debug(event);
-      this.error = event.error;
-    };
-    this.recognition.onend = e => {
-      console.debug('onend', e);
-      this.recognition = null;
-      this.status = this.statuses.ENDED;
-    };
-    this.recognition.onresult = event => {
-      this.loading = true;
-      console.debug(event);
-      let final = '';
-      for (var i = event.resultIndex; i < event.results.length; ++i) {
-        if (event.results[i].isFinal) {
-          final += event.results[i][0].transcript;
-        }
+    const service = window['dictate-service'];
+    let base = '';
+    this.recognition = await service.run({
+      webSocketServerUrl: process.env.WEBSOCKET_SERVER,
+      onPartialResults: (data: object) => {
+        this.status = this.statuses.PROCESS;
+        this.loading = true;
+        this.$emit('result', base + ' ' + data);
+      },
+      onResults: (data: object) => {
+        base += ' ' + data;
+        this.status = this.statuses.PROCESS;
+        this.loading = true;
+        this.$emit('result', base);
       }
+    });
 
-      if (final) {
-        this.loading = false;
-        this.result += final;
-        console.debug('speech result', this.result);
-        this.$emit('result', this.result);
-      }
-    };
-    this.recognition.onaudioend = e => {
-      console.debug('onaudioend', e);
-    };
-
-    this.recognition.lang = process.env.SPEECH_LANG;
-    console.debug('Speech lang:', process.env.SPEECH_LANG);
-    this.recognition.start();
+    this.status = this.statuses.STARTED;
   }
 }
 </script>

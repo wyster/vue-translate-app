@@ -20,5 +20,9 @@ module.exports = {
   },
   chainWebpack: config => {
     config.plugin('dotenv').use(DotenvPlugin, [{ sample: './.env.dist' }]);
+    config.resolve.alias.set('@libs', path.resolve(__dirname, 'lib'));
+  },
+  configureWebpack: config => {
+    config.devtool = 'source-map';
   }
 };
