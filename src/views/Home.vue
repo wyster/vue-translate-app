@@ -11,6 +11,11 @@ import Search from '@/views/Search.vue';
 @Component({
   components: {
     Search
+  },
+  beforeRouteLeave(to) {
+    if (to.name === 'search') {
+      history.pushState({}, document.title, to.path);
+    }
   }
 })
 export default class Index extends Vue {}

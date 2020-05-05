@@ -66,6 +66,11 @@ interface List {
   components: {
     Recognition,
     'no-ssr': NoSSR
+  },
+  beforeRouteLeave(to) {
+    if (to.name === 'search') {
+      history.pushState({}, document.title, to.path);
+    }
   }
 })
 export default class Index extends Vue {
