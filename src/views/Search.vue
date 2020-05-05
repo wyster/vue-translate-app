@@ -76,6 +76,9 @@ export default class Index extends Vue {
     }
     (this.$refs.input as HTMLElement).focus();
     this.$watch('input', (v: string) => {
+      if (v === '') {
+        (this.$refs.input as HTMLElement).focus();
+      }
       this.$store.state.searchList.length = 0;
       this.$nextTick(() => {
         v = v.toLocaleLowerCase();
