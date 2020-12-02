@@ -3,7 +3,7 @@ import { createApp } from './main';
 
 interface Context {
   url: string;
-  state: object
+  state: object;
 }
 
 export default (context: Context) => {

@@ -15,8 +15,8 @@
     "test:unit": "vue-cli-service test:unit",
     "deploy::production": "npx shipit production deploy",
     "rollback::production": "npx shipit production rollback",
-    "prettier": "npx prettier ./ --write",
-    "ci": "npx prettier ./ --check"
+    "prettier": "npx prettier --write ./**/*.{js,vue,ts,json}",
+    "ci": "npx prettier --check ./**/*.{js,vue,ts,json}"
   },
   "dependencies": {
     "@types/axios": "^0.14.0",

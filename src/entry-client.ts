@@ -1,12 +1,12 @@
 /* eslint-disable */
 import { loadAsyncComponents } from '@akryum/vue-cli-plugin-ssr/client';
-import './registerServiceWorker'
+import './registerServiceWorker';
 
 import { createApp } from './main';
 
 declare global {
   interface Window {
-    __INITIAL_STATE__: any
+    __INITIAL_STATE__: any;
   }
 }
 
