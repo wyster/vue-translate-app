@@ -32,3 +32,5 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_REPOSITORY }}:translate-vue-app-latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
+          build-args: |
+            FRONTEND_ENV=${{ secrets.FRONTEND_ENV }}
