@@ -1,6 +1,7 @@
-ARG FRONTEND_ENV
 ARG NODE_VERSION=14
 FROM node:${NODE_VERSION}-slim
+
+ARG FRONTEND_ENV
 
 COPY . /app
 RUN echo "${FRONTEND_ENV}" > /app/.env
