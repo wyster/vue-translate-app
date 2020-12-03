@@ -19,7 +19,9 @@ module.exports = {
     msTileColor: '#ffffff'
   },
   chainWebpack: config => {
-    config.plugin('dotenv').use(DotenvPlugin, [{ sample: './.env.dist' }]);
+    config
+      .plugin('dotenv')
+      .use(DotenvPlugin, [{ sample: './.env.dist', allowEmptyValues: true }]);
     config.resolve.alias.set('@libs', path.resolve(__dirname, 'lib'));
   },
   configureWebpack: config => {
